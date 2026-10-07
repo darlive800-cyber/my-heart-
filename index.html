@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Для Дины ❤️</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: white;
+    background:
+        radial-gradient(circle at 20% 20%, #ff5c9a55, transparent 30%),
+        radial-gradient(circle at 80% 80%, #ff174455, transparent 35%),
+        linear-gradient(145deg, #160816, #4b102f, #8e174c);
+}
+
+.screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    text-align: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+h1 {
+    font-size: 34px;
+    margin: 10px 0;
+}
+
+p {
+    max-width: 390px;
+    font-size: 18px;
+    line-height: 1.55;
+    opacity: .92;
+}
+
+button {
+    border: none;
+    padding: 16px 28px;
+    border-radius: 50px;
+    background: white;
+    color: #8e174c;
+    font-size: 17px;
+    font-weight: 700;
+    box-shadow: 0 10px 30px #0005;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+button:active {
+    transform: scale(.95);
+}
+
+.big-heart {
+    font-size: 105px;
+    animation: heartbeat 1.2s infinite;
+}
+
+@keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+/* GAME */
+
+#game {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 60vh;
+    min-height: 430px;
+    margin-top: 15px;
+    border-radius: 28px;
+    overflow: hidden;
+    background: #ffffff0d;
+    border: 1px solid #ffffff22;
+    box-shadow: inset 0 0 50px #0002;
+}
+
+.top {
+    position: absolute;
+    z-index: 10;
+    top: 12px;
+    left: 15px;
+    right: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.badge {
+    padding: 8px 14px;
+    border-radius: 30px;
+    background: #0005;
+    backdrop-filter: blur(5px);
+}
+
+.heart {
+    position: absolute;
+    font-size: 43px;
+    cursor: pointer;
+    user-select: none;
+    animation: appear .3s ease-out;
+    filter: drop-shadow(0 5px 8px #0004);
+}
+
+@keyframes appear {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#message {
+    height: 35px;
+    margin-top: 8px;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.small {
+    margin-top: 25px;
+    opacity: .5;
+    font-size: 13px;
+}
+
+/* CONFETTI */
+
+.confetti {
+    position: fixed;
+    top: -20px;
+    font-size: 22px;
+    animation: fall 3s linear forwards;
+    pointer-events: none;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* LOVE CARD */
+
+.love-card {
+    padding: 30px 22px;
+    max-width: 430px;
+    border-radius: 30px;
+    background: #ffffff12;
+    border: 1px solid #ffffff25;
+    box-shadow: 0 20px 60px #0005;
+    backdrop-filter: blur(10px);
+}
+
+.love-card h2 {
+    font-size: 29px;
+    margin-top: 0;
+}
+
+.signature {
+    margin-top: 25px;
+    font-size: 17px;
+    opacity: .8;
+}
+</style>
+</head>
+
+<body>
+
+<!-- START -->
+
+<section id="start" class="screen">
+
+    <div class="big-heart">❤️</div>
+
+    <h1>Дина, это для тебя 💕</h1>
+
+    <p>
+        Я приготовил для тебя маленькую игру.
+        Но есть одна цель — собрать все сердечки
+        и узнать, что ждёт тебя в конце...
+    </p>
+
+    <button onclick="startGame()">
+        Начать игру ❤️
+    </button>
+
+    <div class="small">
+        Сделано специально для Дины
+    </div>
+
+</section>
+
+
+<!-- GAME -->
+
+<section id="play" class="screen hidden">
+
+    <h1>Дина, собери моё сердце ❤️</h1>
+
+    <p>
+        Нажимай на сердечки, пока они не исчезли!
+    </p>
+
+    <div id="game">
+
+        <div class="top">
+
+            <div class="badge">
+                ❤️ <span id="score">0</span>/10
+            </div>
+
+            <div class="badge">
+                ⏱️ <span id="time">20</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="message"></div>
+
+</section>
+
+
+<!-- FINISH -->
+
+<section id="finish" class="screen hidden">
+
+    <div class="big-heart">💖</div>
+
+    <h1>Дина, ты справилась!</h1>
+
+    <p>
+        Ты собрала все мои сердечки...
+        Но на самом деле ты давно уже
+        собрала моё настоящее сердце ❤️
+    </p>
+
+    <button onclick="openLove()">
+        Открыть подарок 🎁
+    </button>
+
+</section>
+
+
+<!-- LOVE -->
+
+<section id="love" class="screen hidden">
+
+    <div class="love-card">
+
+        <div class="big-heart">❤️</div>
+
+        <h2>Дина, это тебе</h2>
+
+        <p>
+            Я не знаю, насколько идеальными бывают слова,
+            поэтому скажу просто:
+            <br><br>
+
+            <b>Ты мне очень дорога.</b>
+            <br><br>
+
+            Мне нравится видеть твою улыбку,
+            нравится проводить с тобой время
+            и просто знать, что ты есть.
+            <br><br>
+
+            Если бы моё сердце можно было
+            подарить кому-то одному —
+            я бы подарил его тебе. ❤️
+        </p>
+
+        <div class="signature">
+            Твой Айбек ❤️
+        </div>
+
+        <button onclick="restart()">
+            Сыграть ещё раз 🔄
+        </button>
+
+    </div>
+
+</section>
+
+
+<script>
+
+let score = 0;
+let time = 20;
+let timer;
+let spawnTimer;
+
+const messages = [
+    "Это сердечко для тебя ❤️",
+    "Дина, ты умница 🥰",
+    "Ещё одно сердечко 💕",
+    "Ты почти собрала моё сердце!",
+    "Ты прекрасна ❤️",
+    "Осталось совсем немного 💖"
+];
+
+function showScreen(id) {
+
+    document.querySelectorAll(".screen")
+        .forEach(screen => screen.classList.add("hidden"));
+
+    document.getElementById(id)
+        .classList.remove("hidden");
+}
+
+
+function startGame() {
+
+    score = 0;
+    time = 20;
+
+    document.getElementById("score").textContent = score;
+    document.getElementById("time").textContent = time;
+    document.getElementById("message").textContent = "";
+
+    showScreen("play");
+
+    clearInterval(timer);
+    clearInterval(spawnTimer);
+
+    spawnHeart();
+
+    spawnTimer = setInterval(() => {
+
+        spawnHeart();
+
+    }, 650);
+
+    timer = setInterval(() => {
+
+        time--;
+
+        document.getElementById("time").textContent = time;
+
+        if (time <= 0) {
+            finishGame();
+        }
+
+    }, 1000);
+}
+
+
+function spawnHeart() {
+
+    if (score >= 10) return;
+
+    const game = document.getElementById("game");
+
+    const heart = document.createElement("div");
+
+    heart.className = "heart";
+
+    const hearts = [
+        "❤️",
+        "💗",
+        "💖",
+        "💕",
+        "💓"
+    ];
+
+    heart.textContent =
+        hearts[Math.floor(Math.random() * hearts.length)];
+
+    const x =
+        Math.random() * (game.clientWidth - 60);
+
+    const y =
+        70 + Math.random() * (game.clientHeight - 130);
+
+    heart.style.left = x + "px";
+    heart.style.top = y + "px";
+
+    heart.onclick = function () {
+
+        score++;
+
+        document.getElementById("score").textContent = score;
+
+        document.getElementById("message").textContent =
+            messages[Math.floor(Math.random() * messages.length)];
+
+        heart.remove();
+
+        if (score >= 10) {
+            finishGame();
+        }
+    };
+
+    game.appendChild(heart);
+
+    setTimeout(() => {
+
+        if (heart.parentNode) {
+            heart.remove();
+        }
+
+    }, 1700);
+}
+
+
+function finishGame() {
+
+    clearInterval(timer);
+    clearInterval(spawnTimer);
+
+    document
+        .querySelectorAll(".heart")
+        .forEach(h => h.remove());
+
+    createConfetti();
+
+    setTimeout(() => {
+
+        showScreen("finish");
+
+    }, 500);
+}
+
+
+function openLove() {
+
+    showScreen("love");
+
+    createConfetti();
+}
+
+
+function createConfetti() {
+
+    const symbols = [
+        "❤️",
+        "💖",
+        "💕",
+        "✨",
+        "🌸"
+    ];
+
+    for (let i = 0; i < 35; i++) {
+
+        const item = document.createElement("div");
+
+        item.className = "confetti";
+
+        item.textContent =
+            symbols[Math.floor(Math.random() * symbols.length)];
+
+        item.style.left =
+            Math.random() * 100 + "vw";
+
+        item.style.animationDuration =
+            (2 + Math.random() * 2) + "s";
+
+        item.style.animationDelay =
+            Math.random() * .8 + "s";
+
+        document.body.appendChild(item);
+
+        setTimeout(() => {
+            item.remove();
+        }, 4000);
+    }
+}
+
+
+function restart() {
+
+    startGame();
+
+}
+
+</script>
+
+</body>
+</html>
